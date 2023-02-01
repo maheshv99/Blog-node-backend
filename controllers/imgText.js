@@ -1,30 +1,33 @@
-const LgImgData = (req,res) => {
-    res.send([
-      {
-        img:"https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?cs=srgb&dl=pexels-pixabay-257360.jpg&fm=jpg",
-        text:"Nature is a art of a God.. ",
-        type:"Travel",
-        date:"Nov 12, 2022"
-      }
-    ])
+const client=require("../database/connection")
+
+const LgImgData= async (req,res)=>{
+  try {
+    await client.connect();
+    const database=client.db("blogProject");
+    const collection=database.collection("LgImgData");
+    const responce= await collection.find();
+    const responce1= await responce.toArray();
+    console.log("Responce from from server =>",responce1);
+    return res.status(200).send({success:responce1})
+  } catch (error) {
+    console.log("Some error is occured while fetching the data =>",error.message);
+    return res.status(500).send({Error:"Somthing went Wrong while fetching the data"});
+  }
 }
-const SmImgData = (req,res) => {
-    res.send([
-    {
-        img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsmjPqt_nU_HQgdi0Ki3QvACncwyAzC_2rHA&usqp=CAU",
-        text:"Land is the best art.",
-        text1:"—Andy Warhol",
-        type:"Travel",
-        date:"Nov 12, 2022"
-    },
-    {
-        img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsmjPqt_nU_HQgdi0Ki3QvACncwyAzC_2rHA&usqp=CAU",
-        text:"Land is the best art.",
-        text1:"—Andy Warhol",
-        type:"Travel",
-        date:"Nov 12, 2022"
-    }
-    ])
+
+const SmImgData= async (req,res)=>{
+  try {
+    await client.connect();
+    const database=client.db("blogProject");
+    const collection=database.collection("SmImgData");
+    const responce= await collection.find();
+    const responce1= await responce.toArray();
+    console.log("Responce from from server =>",responce1);
+    return res.status(200).send({success:responce1})
+  } catch (error) {
+    console.log("Some error is occured while fetching the data =>",error.message);
+    return res.status(500).send({Error:"Somthing went Wrong while fetching the data"});
+  }
 }
 
 module.exports.getLgImgData = LgImgData;
